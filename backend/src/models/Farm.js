@@ -42,4 +42,6 @@ farmSchema.pre('save', function (next) {
 // index for geo queries
 farmSchema.index({ location: '2dsphere' });
 
+farmSchema.index({ name: 'text', description: 'text' });
+
 export default mongoose.model('Farm', farmSchema);
