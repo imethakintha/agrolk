@@ -7,6 +7,7 @@ import cors from 'cors';
 
 import authRoutes from './src/routes/authRoutes.js';
 import profileRoutes from './src/routes/profileRoutes.js';
+import farmRoutes from '.src/routes/farmRoutes.js';
 
 // Load env
 dotenv.config();
@@ -31,6 +32,7 @@ app.use((err, _req, res, _next) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/farms', farmRoutes);
 // DB & server start
 const PORT = process.env.PORT || 5000;
 mongoose
