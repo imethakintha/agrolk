@@ -7,8 +7,9 @@ import cors from 'cors';
 
 import authRoutes from './src/routes/authRoutes.js';
 import profileRoutes from './src/routes/profileRoutes.js';
-import farmRoutes from '.src/routes/farmRoutes.js';
-import searchRoutes from '.src/routes/searchRoutes.js';
+import farmRoutes from './src/routes/farmRoutes.js';
+import searchRoutes from './src/routes/searchRoutes.js';
+import bookingRoutes from './src/routes/bookingRoutes.js';
 
 
 // Load env
@@ -38,6 +39,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/farms', farmRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 // DB & server start
 const PORT = process.env.PORT || 5000;
