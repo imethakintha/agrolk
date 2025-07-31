@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
     reviewCount:   { type: Number, default: 0 },
 
     isVerified: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
      // Admin approval (Guide/Driver)
   },
   { timestamps: true }
