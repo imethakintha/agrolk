@@ -43,7 +43,6 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Admin Dashboard</h1>
 
-      {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
           { label: 'Total Users', value: analytics.totalUsers },
@@ -58,7 +57,6 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-4 rounded shadow">
           <h3 className="font-semibold mb-2">Users Distribution</h3>
@@ -73,7 +71,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Pending Verifications */}
       <div className="bg-white p-4 rounded shadow">
         <h3 className="font-semibold mb-2">Pending Verifications</h3>
         {pendingUsers?.length ? (

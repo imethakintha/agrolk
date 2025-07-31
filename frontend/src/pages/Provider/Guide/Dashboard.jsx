@@ -18,7 +18,6 @@ export default function GuideDashboard() {
     queryFn: () => api.get('/bookings?role=guide').then(r => r.data),
   });
 
-  // Update availability
   const updateMutation = useMutation({
     mutationFn: (payload) => api.put('/profile', payload),
     onSuccess: () => qc.invalidateQueries(['guideProfile']),
@@ -28,7 +27,6 @@ export default function GuideDashboard() {
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Guide Dashboard</h2>
 
-      {/* Profile Section */}
       <div className="bg-white p-4 rounded shadow">
         <h3 className="font-semibold mb-2">Profile</h3>
         <p>Name: {profile?.name}</p>
@@ -44,7 +42,6 @@ export default function GuideDashboard() {
         </label>
       </div>
 
-      {/* Availability Calendar */}
       <div className="bg-white p-4 rounded shadow">
         <h3 className="font-semibold mb-2">Blocked Dates</h3>
         <input
@@ -60,7 +57,6 @@ export default function GuideDashboard() {
         </button>
       </div>
 
-      {/* Bookings */}
       <div className="bg-white p-4 rounded shadow">
         <h3 className="font-semibold mb-2">Upcoming Bookings</h3>
         {bookings?.length ? (

@@ -7,17 +7,17 @@ export default function Register() {
     name: '',
     email: '',
     password: '',
-    role: 'Tourist',                // default
-    // Farmer extras
+    role: 'Tourist',
+    
     farmName: '',
     farmDesc: '',
     lat: 7.2914,
     lng: 80.6337,
-    // Guide extras
+    
     licenseNo: '',
     languages: '',
     serviceFee: 2000,
-    // Driver extras
+    
     vehicleType: '',
     vehicleNumber: '',
     ratePerKm: 1500,
@@ -35,7 +35,6 @@ export default function Register() {
     setLoading(true);
 
     try {
-      // Build payload dynamically
       const payload = {
         name: form.name,
         email: form.email,
@@ -62,7 +61,6 @@ export default function Register() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.user.role);
 
-      // Redirect
       if (data.user.role === 'Admin') navigate('/admin/dashboard');
       else if (['Farmer', 'Guide', 'Driver'].includes(data.user.role))
         navigate('/provider/dashboard');
@@ -107,7 +105,6 @@ export default function Register() {
           className="w-full border px-3 py-2 rounded"
         />
 
-        {/* Role selector */}
         <div>
           <label className="block text-sm font-medium mb-1">Role</label>
           <select
@@ -123,7 +120,6 @@ export default function Register() {
           </select>
         </div>
 
-        {/* Farmer extras */}
         {form.role === 'Farmer' && (
           <>
             <input
@@ -165,7 +161,6 @@ export default function Register() {
           </>
         )}
 
-        {/* Guide extras */}
         {form.role === 'Guide' && (
           <>
             <input
@@ -195,7 +190,6 @@ export default function Register() {
           </>
         )}
 
-        {/* Driver extras */}
         {form.role === 'Driver' && (
           <>
             <input

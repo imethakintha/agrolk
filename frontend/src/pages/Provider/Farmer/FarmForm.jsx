@@ -47,7 +47,6 @@ export default function FarmForm({ onSuccess }) {
         onChange={handleFile}
         className="mb-2"
       />
-      {/* location & activities inputs omitted for brevity */}
     </div>
   );
 }
