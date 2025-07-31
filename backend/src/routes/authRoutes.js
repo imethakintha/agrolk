@@ -5,8 +5,6 @@ import { protect } from '../middlewares/auth.js';
 
 const router = express.Router();
 
-// @desc    Register
-// @route   POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, role, ...rest } = req.body;
@@ -21,8 +19,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// @desc    Login
-// @route   POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -37,8 +33,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// @desc    Get current user
-// @route   GET /api/auth/me
 router.get('/me', protect, (req, res) => res.json(req.user));
 
 export default router;

@@ -27,8 +27,6 @@ const reviewSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-// Ensure one review per booking per target
 reviewSchema.index({ booking: 1, targetType: 1 }, { unique: true });
 
 export default mongoose.model('Review', reviewSchema);

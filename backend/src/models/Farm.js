@@ -4,7 +4,7 @@ import slugify from 'slugify';
 const ActivitySchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  duration: { type: Number, required: true }, // minutes
+  duration: { type: Number, required: true }, 
   price: { type: Number, required: true },
   capacity: { type: Number, required: true },
 });
@@ -22,11 +22,11 @@ const farmSchema = new mongoose.Schema(
         required: true,
       },
       coordinates: {
-        type: [Number], // [lng, lat]
+        type: [Number], 
         required: true,
       },
     },
-    images: [{ type: String }], // Cloudinary URLs
+    images: [{ type: String }], 
     activities: [ActivitySchema],
     isActive: { type: Boolean, default: true },
     averageRating: { type: Number, default: 0 },
@@ -35,13 +35,11 @@ const farmSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// auto slug
 farmSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
 
-// index for geo queries
 farmSchema.index({ location: '2dsphere' });
 
 farmSchema.index({ name: 'text', description: 'text' });

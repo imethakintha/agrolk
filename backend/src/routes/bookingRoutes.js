@@ -11,8 +11,6 @@ dotenv.config();
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// @desc  Create booking + Payment Intent
-// @route POST /api/bookings
 router.post('/', protect, async (req, res) => {
   try {
     const { farmId, activityId, date, guideId, driverId, participants = 1 } = req.body;
@@ -28,12 +26,11 @@ router.post('/', protect, async (req, res) => {
     if (farmer.blockedDates.includes(date))
       return res.status(400).json({ message: 'Farmer unavailable on this date' });
 
-    // Pricing
     let totalCost = activity.price * participants;
     if (guideId) {
       const guide = await User.findById(guideId);
       if (!guide) return res.status(404).json({ message: 'Guide not found' });
-      totalCost += guide.serviceFee || 2000; // placeholder
+      totalCost += guide.serviceFee || 2000; 
     }
     if (driverId) {
       const driver = await User.findById(driverId);
@@ -41,9 +38,8 @@ router.post('/', protect, async (req, res) => {
       totalCost += driver.serviceFee || 1500;
     }
 
-    // Stripe Payment Intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: totalCost * 100, // cents
+      amount: totalCost * 100,
       currency: 'lkr',
       metadata: { farmId, touristId: req.user.id },
     });
@@ -60,7 +56,6 @@ router.post('/', protect, async (req, res) => {
       participants,
     });
 
-    // Emails
     await sendEmail({
       to: req.user.email,
       subject: 'Booking Confirmation – AgroLK',
@@ -78,8 +73,6 @@ router.post('/', protect, async (req, res) => {
   }
 });
 
-// @desc  Confirm booking after payment succeeded (webhook in prod)
-// @route PATCH /api/bookings/:id/confirm
 router.patch('/:id/confirm', protect, async (req, res) => {
   const booking = await Booking.findById(req.params.id);
   if (!booking) return res.status(404).json({ message: 'Booking not found' });
@@ -91,8 +84,6 @@ router.patch('/:id/confirm', protect, async (req, res) => {
   res.json(booking);
 });
 
-// @desc  Tourist / Farmer view bookings
-// @route GET /api/bookings
 router.get('/', protect, async (req, res) => {
   const filter = req.user.role === 'Farmer'
     ? { farm: { $in: await Farm.find({ farmer: req.user.id }).distinct('_id') } }

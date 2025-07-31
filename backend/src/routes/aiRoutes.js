@@ -4,8 +4,6 @@ import { identifyImage } from '../utils/aiService.js';
 
 const router = express.Router();
 
-// @desc  Identify plant / fruit / etc.
-// @route POST /api/ai/identify
 router.post(
   '/identify',
   upload.single('image'),

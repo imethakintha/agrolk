@@ -6,10 +6,8 @@ import Review from '../models/Review.js';
 import { adminOnly } from '../middlewares/admin.js';
 
 const router = express.Router();
-router.use(adminOnly); // everything below is admin-only
+router.use(adminOnly);
 
-// ---------- Users ----------
-// GET /api/admin/users?role=Guide&status=pending
 router.get('/users', async (req, res) => {
   const { role, status } = req.query;
   const filter = {};
@@ -22,7 +20,6 @@ router.get('/users', async (req, res) => {
   res.json(users);
 });
 
-// PATCH /api/admin/users/:id/verify
 router.patch('/users/:id/verify', async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.params.id,
@@ -32,35 +29,27 @@ router.patch('/users/:id/verify', async (req, res) => {
   res.json({ message: `${user.role} verified`, user });
 });
 
-// PATCH /api/admin/users/:id/suspend
 router.patch('/users/:id/suspend', async (req, res) => {
   await User.findByIdAndUpdate(req.params.id, { isActive: false });
   res.json({ message: 'User suspended' });
 });
 
-// PATCH /api/admin/users/:id/restore
 router.patch('/users/:id/restore', async (req, res) => {
   await User.findByIdAndUpdate(req.params.id, { isActive: true });
   res.json({ message: 'User restored' });
 });
 
-// ---------- Farms ----------
-// PATCH /api/admin/farms/:id/visibility
 router.patch('/farms/:id/visibility', async (req, res) => {
   const { isActive } = req.body;
   await Farm.findByIdAndUpdate(req.params.id, { isActive });
   res.json({ message: `Farm visibility set to ${isActive}` });
 });
 
-// ---------- Reviews ----------
-// DELETE /api/admin/reviews/:id
 router.delete('/reviews/:id', async (req, res) => {
   await Review.findByIdAndDelete(req.params.id);
   res.json({ message: 'Review deleted' });
 });
 
-// ---------- Analytics ----------
-// GET /api/admin/analytics
 router.get('/analytics', async (_req, res) => {
   const [
     totalUsers,

@@ -21,7 +21,7 @@ const bookingSchema = new mongoose.Schema(
       enum: ['pending', 'confirmed', 'cancelled', 'completed'],
       default: 'pending',
     },
-    paymentIntentId: String, // from Stripe
+    paymentIntentId: String,
     participants: { type: Number, default: 1 },
   },
   { timestamps: true }

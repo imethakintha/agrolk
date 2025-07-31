@@ -5,14 +5,10 @@ import upload from '../config/cloudinary.js';
 
 const router = express.Router();
 
-// @desc  Get my profile
-// @route GET /api/profile/me
 router.get('/me', protect, async (req, res) => {
   res.json(req.user);
 });
 
-// @desc  Update profile (and upload image)
-// @route PUT /api/profile
 router.put(
   '/',
   protect,
@@ -22,7 +18,6 @@ router.put(
       const updates = req.body;
       if (req.file) updates.image = req.file.path;
 
-      // availability calendar (array of YYYY-MM-DD strings)
       if (updates.blockedDates) {
         updates.blockedDates = JSON.parse(updates.blockedDates);
       }

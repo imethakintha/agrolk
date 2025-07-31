@@ -7,19 +7,16 @@ const visionClient = new vision.ImageAnnotatorClient({
 });
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Simple in-memory cache (replace with Redis if scaling)
 const cache = new Map();
 
 export async function identifyImage(filePath) {
   const cacheKey = crypto.createHash('md5').update(filePath).digest('hex');
   if (cache.has(cacheKey)) return cache.get(cacheKey);
 
-  // Vision label detection
   const [result] = await visionClient.labelDetection(filePath);
   const labels = result.labelAnnotations || [];
   const topLabel = labels.find(l => l.score > 0.7)?.description || 'unknown';
 
-  // Gemini creative description
   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
   const prompt = `Give a concise yet fun 3-sentence explanation (max 100 words) about "${topLabel}" in the context of Sri Lankan agro-tourism.`;
   const geminiRes = await model.generateContent(prompt);

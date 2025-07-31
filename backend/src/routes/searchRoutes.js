@@ -3,29 +3,25 @@ import Farm from '../models/Farm.js';
 
 const router = express.Router();
 
-// @desc  Search & filter farms
-// @route GET /api/search
 router.get('/', async (req, res) => {
   try {
     const {
-      q,          // text
+      q,       
       lat,
       lng,
-      radius = 25, // km
+      radius = 25, 
       minPrice,
       maxPrice,
       activityType,
-      date,       // YYYY-MM-DD
+      date,
       page = 1,
       limit = 12,
     } = req.query;
 
     const pipeline = [];
 
-    // Text search
     if (q) pipeline.push({ $match: { $text: { $search: q } } });
 
-    // Geo filter
     if (lat && lng) {
       pipeline.push({
         $geoNear: {
@@ -37,7 +33,6 @@ router.get('/', async (req, res) => {
       });
     }
 
-    // Price filter (cheapest activity in farm)
     if (minPrice || maxPrice) {
       const priceMatch = {};
       if (minPrice) priceMatch.$gte = Number(minPrice);
@@ -45,14 +40,12 @@ router.get('/', async (req, res) => {
       pipeline.push({ $match: { 'activities.price': priceMatch } });
     }
 
-    // Activity name filter
     if (activityType) {
       pipeline.push({
         $match: { 'activities.name': new RegExp(activityType, 'i') },
       });
     }
 
-    // Date availability (blockedDates on farmer NOT containing date)
     if (date) {
       pipeline.push(
         { $lookup: {
@@ -66,7 +59,6 @@ router.get('/', async (req, res) => {
       );
     }
 
-    // Pagination facets
     pipeline.push(
       {
         $facet: {
@@ -78,7 +70,7 @@ router.get('/', async (req, res) => {
               $project: {
                 name: 1,
                 slug: 1,
-                images: { $slice: ['$images', 1] }, // first image as thumbnail
+                images: { $slice: ['$images', 1] },
                 activities: 1,
                 distance: { $ifNull: ['$distance', 0] },
               },
