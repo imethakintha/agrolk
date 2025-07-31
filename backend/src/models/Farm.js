@@ -29,6 +29,8 @@ const farmSchema = new mongoose.Schema(
     images: [{ type: String }], // Cloudinary URLs
     activities: [ActivitySchema],
     isActive: { type: Boolean, default: true },
+    averageRating: { type: Number, default: 0 },
+    reviewCount:   { type: Number, default: 0 },
   },
   { timestamps: true }
 );

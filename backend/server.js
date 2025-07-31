@@ -11,6 +11,7 @@ import farmRoutes from './src/routes/farmRoutes.js';
 import searchRoutes from './src/routes/searchRoutes.js';
 import bookingRoutes from './src/routes/bookingRoutes.js';
 import aiRoutes from './src/routes/aiRoutes.js';
+import reviewRoutes from './src/routes/reviewRoutes.js';
 
 
 // Load env
@@ -42,6 +43,7 @@ app.use('/api/farms', farmRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // DB & server start
 const PORT = process.env.PORT || 5000;

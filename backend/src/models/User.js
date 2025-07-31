@@ -19,8 +19,11 @@ const userSchema = new mongoose.Schema(
     vehicleType: { type: String },              // Driver
     vehicleNumber: { type: String },            // Driver
     serviceAreas: [{ type: String }],           // Guide & Driver
+    averageRating: { type: Number, default: 0 },
+    reviewCount:   { type: Number, default: 0 },
 
-    isVerified: { type: Boolean, default: false }, // Admin approval (Guide/Driver)
+    isVerified: { type: Boolean, default: false },
+     // Admin approval (Guide/Driver)
   },
   { timestamps: true }
 );
